@@ -171,8 +171,8 @@ def train_model(model, criterion, optimizer, train_loader, val_loader=None, num_
 
 
 # Directories
-train_image_dir = '/Users/hakrts/Desktop/proje/yeni/final_dataset/images'
-train_mask_dir = '/Users/hakrts/Desktop/proje/yeni/final_dataset/masks'
+train_image_dir = '/path_to_the_images'
+train_mask_dir = '/path_to_the_masks'
 
 
 # Data transforms
