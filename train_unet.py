@@ -24,7 +24,7 @@ device = (
 )
 print(f"Using {device} device")
 
-# Custom Dataset Class for loading images and masks
+# Custom Dataset Class image ve maskleri load etmek için
 class CustomDataset(Dataset):
     def __init__(self, image_dir, mask_dir, transform=None, target_size=(512,384)):
         self.image_dir = image_dir
@@ -49,7 +49,7 @@ class CustomDataset(Dataset):
         # mask_eroded = cv2.erode(mask_dilated, np.ones((5, 5), np.uint8), iterations=5)  # Erosion
         # mask = Image.fromarray(mask_eroded)
 
-        # Resize images and masks
+        # Resize image ve mask
         image_resized = image.resize(self.target_size)
         mask_resized = mask.resize(self.target_size)
 
@@ -72,17 +72,17 @@ optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 print("Model Summary:")
 summary(model, input_size=(1, 3, 512,384), device=device)
 
-# Define loss function
+# loss fonksiyonu tanımla
 # pos_weight = torch.tensor([3], device=device)
 criterion = nn.BCELoss()
 
-# Training function
+# Training fonksiyonu
 def train_model(model, criterion, optimizer, train_loader, val_loader=None, num_epochs=100, early_stopping_patience=4):
     patience_counter = 0
     checkpoint_path = '/Users/hakrts/Desktop/proje/yeni/unet5.pth'
     best_loss = float('inf')
     
-    # Lists to store loss values for plotting
+    # loss değerleribi plotting için listele
     train_losses = []
     val_losses = []
 
@@ -105,7 +105,7 @@ def train_model(model, criterion, optimizer, train_loader, val_loader=None, num_
         train_loss /= len(train_loader.dataset)
         train_losses.append(train_loss)
 
-        # Validation (only if val_loader is provided)
+        # Validation (val_loader varsa)
         if val_loader:
             model.eval()
             val_loss = 0.0
@@ -119,7 +119,7 @@ def train_model(model, criterion, optimizer, train_loader, val_loader=None, num_
             val_losses.append(val_loss)
             print(f'Epoch [{epoch+1}/{num_epochs}], Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}')
 
-            # Early stopping and checkpointing based on validation loss
+            # Early stopping ve checkpoint 
             if val_loss < best_loss:
                 best_loss = val_loss
                 best_model_wts = model.state_dict()
@@ -140,7 +140,7 @@ def train_model(model, criterion, optimizer, train_loader, val_loader=None, num_
                 print('Early stopping triggered')
                 break
         else:
-            # Print training results without validation
+            # Print training results eğer val yoksa
             print(f'Epoch [{epoch+1}/{num_epochs}], Train Loss: {train_loss:.4f}')
             if train_loss < best_loss:
                 best_loss = train_loss
@@ -164,13 +164,13 @@ def train_model(model, criterion, optimizer, train_loader, val_loader=None, num_
             
             
 
-    # Load the best model weights if validation was used
+    # eğer val kullanıldıysa en iyi modeli yükle
     if val_loader:
         model.load_state_dict(best_model_wts)
 
 
 
-# Directories
+# Dir
 train_image_dir = '/path_to_the_images'
 train_mask_dir = '/path_to_the_masks'
 
@@ -180,12 +180,12 @@ transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
-# Datasets and DataLoaders with target size
+# Datasets, DataLoaders 
 train_dataset = CustomDataset(train_image_dir, train_mask_dir, transform=transform, target_size=(512,384))
 
 train_loader = DataLoader(train_dataset, batch_size=4)
 
-# Train the model
+#  model
 model = train_model(model, criterion, optimizer, train_loader, num_epochs=40)
 
 
