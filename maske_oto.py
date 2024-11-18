@@ -65,7 +65,7 @@ def read_yolo_txt(txt_file_path):
         lines = f.readlines()
         for line in lines:
             parts = line.strip().split()
-            x_center, y_center, width, height = map(float, parts[1:])  # İlk kısım class_id, kullanmıyoruz
+            x_center, y_center, width, height = map(float, parts[1:])  # İlk kısım (class_id), kullanmıyoruz
             coords.append((x_center, y_center, width, height))
     return coords
 
