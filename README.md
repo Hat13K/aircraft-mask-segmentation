@@ -25,3 +25,9 @@ Bazı resimler daha ince işlem gerektirir, bu tarz resimler benim datamda 150-2
 
 
 Bu maskeler ile eğitilen hafif bir U-Net modeli kullanılarak video segmentasyonu yapıldı. 
+<img width="1032" alt="Ekran Resmi 2024-11-14 04 07 32" src="https://github.com/user-attachments/assets/8df3f111-48ca-44ba-baab-c99c747c1726"><img width="1054" alt="Ekran Resmi 2024-11-13 21 49 57" src="https://github.com/user-attachments/assets/3c2e27a7-49d0-49f1-8854-458cdb27d3a8">
+
+<img width="290" alt="Ekran Resmi 2024-11-18 17 15 32" src="https://github.com/user-attachments/assets/1456cd1c-d7f2-4c44-8c62-568cb189e2ed">![Uploading Ekran Resmi 2024-11-13 21.49.30.png…]()
+
+
+
