@@ -38,16 +38,16 @@ def create_ellipse_mask(image, bbox_coords):
     result1[mask == 255] = np.where(gray_image[mask == 255] <= mean_intensity, 255, 0)
     result2[mask == 255] = np.where(gray_image[mask == 255] > mean_intensity, 255, 0)
 
-    # Convert single channel results to three channels for concatenation
+    # tek kanaldan 3 kanala çevir
     result1_colored = cv2.cvtColor(result1, cv2.COLOR_GRAY2BGR)
     result2_colored = cv2.cvtColor(result2, cv2.COLOR_GRAY2BGR)
 
-    # Combine original image with the two results
+    # 2 sonucun kombinasyonu
     combined = np.hstack((image, result1_colored, result2_colored))
 
-    # Show combined image for 4 seconds
+    # kombinasyonu 4 saniye için göster
     cv2.imshow('Original Image, Result1, Result2', combined)
-    cv2.waitKey(4000)  # Display for 4000 milliseconds (4 seconds)
+    cv2.waitKey(4000)  
     cv2.destroyAllWindows()
 
     print("Maskeleri değerlendirin:")
@@ -100,7 +100,7 @@ def read_yolo_txt(txt_file_path):
         lines = f.readlines()
         for line in lines:
             parts = line.strip().split()
-            x_center, y_center, width, height = map(float, parts[1:])  # İlk kısım class_id, kullanmıyoruz
+            x_center, y_center, width, height = map(float, parts[1:])  # İlk kısım (class_id), kullanmıyoruz
             coords.append((x_center, y_center, width, height))
     return coords
 
@@ -152,9 +152,9 @@ def process_images(image_dir, label_dir, output_mask_dir):
                 print(f"Label not found for {image_filename}, skipping.")
 
 # Kullanım örneği:
-image_dir = '/Users/hakrts/Desktop/proje/yeni/image'
-label_dir = '/Users/hakrts/Desktop/proje/yeni/label'
-output_mask_dir = '/Users/hakrts/Desktop/proje/yeni/masks_yeni1'
+image_dir = '/path_to_the_image'
+label_dir = '/path_to_the_label'
+output_mask_dir = '/path_to_the_masks'
 
 # Tüm görüntüleri ve etiketleri işleyip maskeleri kaydet
 process_images(image_dir, label_dir, output_mask_dir)
