@@ -5,10 +5,10 @@ from torchvision import transforms
 from model_unet import UNet
 import time
 
-# Set the device
+# device ayarla
 device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
 
-# Define the transformation
+# transformation 
 transform = transforms.Compose([
     transforms.ToTensor(),
 ])
@@ -20,7 +20,7 @@ def visualize_prediction_video(video_path, model_path):
     checkpoint_path=model_path
     checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=True)
     model.load_state_dict(checkpoint['model_state_dict'])
-    # model.load_state_dict(torch.load(model_path, map_location=device))
+    # model.load_state_dict(torch.load(model_path, map_location=device)) # eğer model checkpoint de değilse
     model.eval()
     
     cap = cv2.VideoCapture(video_path)
@@ -43,18 +43,13 @@ def visualize_prediction_video(video_path, model_path):
             output = model(image_tensor)
             output = output.squeeze().cpu().numpy()
         
-        # Normalize the output for better visualization
-        # output = (output - output.min()) / (output.max() - output.min()) * 255
-        # output = output.astype(np.uint8)
-        
-        # # Convert output to color map
-        # output_colored = cv2.applyColorMap(output, cv2.COLORMAP_JET)
+    
         output_colored = cv2.applyColorMap(np.uint8(output * 255), cv2.COLORMAP_JET)
 
-        # Stack images horizontally
+        # heatmap ve video alt alta verilecek
         combined = cv2.vconcat([cv2.cvtColor(image, cv2.COLOR_BGR2RGB), output_colored])
         
-        # Display the combined image
+        # kombinasyonu görüntüle
         cv2.imshow('Prediction', combined)
         
         if cv2.waitKey(1) & 0xFF == ord('q'):
